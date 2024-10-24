@@ -1,0 +1,10 @@
+{
+    "development": {
+        "username": "postgres",
+        "password": "secret",
+        "database": "Glowify",
+        "host": "localhost",
+        "port": 5435,
+        "dialect": "postgres"
+    }
+}

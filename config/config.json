@@ -1,10 +1,16 @@
 {
     "development": {
-        "username": "postgres",
-        "password": "secret",
-        "database": "Glowify",
-        "host": "localhost",
-        "port": 5435,
+        "username": "default",
+        "password": "EDzZtclu6M3p",
+        "database": "verceldb",
+        "host": "ep-steep-rice-64178939-pooler.us-east-1.aws.neon.tech",
+        "port": 5432,
+        "dialectOptions": {
+            "ssl": {
+                "require": true,
+                "rejectUnauthorized": false
+            }
+        },
         "dialect": "postgres"
     }
 }

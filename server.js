@@ -13,7 +13,7 @@ app.use(cors());
 const usersRouter = require('./routers/user');
 
 
-// Połączenie z bazą danych
+
 sequelize.sync();
 
 
@@ -36,9 +36,9 @@ app.post('/api/users', async (req, res) => {
     res.status(201).json({ message: 'Użytkownik dodany pomyślnie', user: newUser });
 });
 
-// Endpoint do logowania
+
 app.post('/api/login', async (req, res) => {
-    console.log(req.body)
+
     const { username, password } = req.body;
     const user = await User.findOne({ where: { username } });
 
@@ -59,8 +59,6 @@ app.post('/api/login', async (req, res) => {
     res.json({ token });
 });
 
-
-// Endpoint do edycji danych użytkownika
 app.put('/api/users/:id', async (req, res) => {
     if (req.user.role !== 'admin') {
         return res.status(403).send('Brak uprawnień');

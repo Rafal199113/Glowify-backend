@@ -1,5 +1,7 @@
 'use strict';
 
+const { DataTypes } = require('sequelize');
+
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   up: async (queryInterface, Sequelize) => {
@@ -21,6 +23,18 @@ module.exports = {
       },
       email: {
         type: Sequelize.STRING,
+        allowNull: false,
+      },
+      gender: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      skinType: {
+        type: Sequelize.ARRAY(DataTypes.INTEGER),
+        allowNull: false,
+      },
+      hairType: {
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
       createdAt: {

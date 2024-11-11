@@ -10,7 +10,8 @@ const sequelize = new Sequelize('verceldb', 'default', 'EDzZtclu6M3p', {
             require: true,
             rejectUnauthorized: false // Ustaw na false, jeśli certyfikat SSL jest self-signed
         }
-    }
+    },
+    logging: console.log,
 });
 
 module.exports = sequelize;

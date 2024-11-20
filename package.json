@@ -16,13 +16,22 @@
     "cors": "^2.8.5",
     "ejs": "^3.1.10",
     "express": "^4.21.1",
-    "glowify---backend": "file:",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.7.2",
     "pg": "^8.13.1",
     "sequelize": "^6.37.4"
   },
   "devDependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.3",
+    "cors": "^2.8.5",
+    "ejs": "^3.1.10",
+    "express": "^4.21.1",
+    "glowify---backend": "file:",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.7.2",
+    "pg": "^8.13.1",
+    "sequelize": "^6.37.4",
     "sequelize-cli": "^6.6.2"
   }
 }

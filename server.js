@@ -37,7 +37,7 @@ app.post('/api/users', async (req, res) => {
             return res.status(400).json({ message: 'userExists' });
         }
 
-        console.log("sdfsdf")
+
         const hashedPassword = await bcrypt.hash(password, 10);
         const newUser = await User.create({
             username,
@@ -47,7 +47,7 @@ app.post('/api/users', async (req, res) => {
             skinType,
             hairType
         });
-        return res.status(201).json({ message: 'userCreated' });
+        return res.status(201).json({ message: 'userCreated', user: newUser });
     } catch (error) {
         console.error("Error occurred:", error); // Log any error
         return res.status(500).json({ message: 'Wystąpił błąd serwera' });
@@ -92,22 +92,21 @@ app.post('/api/login', async (req, res) => {
 });
 
 app.put('/api/users/:id', async (req, res) => {
-    if (req.user.role !== 'admin') {
-        return res.status(403).send('Brak uprawnień');
-    }
-
+    console.log(req.body)
     const { id } = req.params;
-    const { username, password } = req.body;
-
+    console.log(id)
+    const { username, password, email, hairType, skinType } = req.body.user;
     const hashedPassword = await bcrypt.hash(password, 10);
     const updatedUser = await User.update(
-        { username, password: hashedPassword },
+        { username, hashedPassword, email, hairType, skinType },
         { where: { id } }
     );
 
-    res.json({ message: 'Dane zaktualizowane pomyślnie', updatedUser });
+    res.json({ message: 'userUpdated' });
 });
 
 app.listen(PORT, () => {
-    console.log('Serwer działa na porcie 3000');
+    console.log('Serwer działa na porcie' + PORT);
 });
+
+module.exports = app;

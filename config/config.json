@@ -5,12 +5,6 @@
         "database": "verceldb",
         "host": "ep-steep-rice-64178939-pooler.us-east-1.aws.neon.tech",
         "port": 5432,
-        "dialectOptions": {
-            "ssl": {
-                "require": true,
-                "rejectUnauthorized": false
-            }
-        },
         "dialect": "postgres"
     }
 }

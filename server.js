@@ -111,4 +111,3 @@ app.listen(PORT, () => {
     console.log('Serwer działa na porcie' + PORT);
 });
 
-module.exports = app;

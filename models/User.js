@@ -36,6 +36,11 @@ User.init({
         allowNull: false,
         unique: true
     },
+    resetCode: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        unique: true
+    },
     createdAt: {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW

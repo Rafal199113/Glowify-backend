@@ -1,12 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const fs = require('fs');
-const User = require('../models/User');
+const { User } = require('../models/User');
 const upload = require('../files/multer')
 const { send } = require('process');
 const { where } = require('sequelize');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const schedule = require('node-schedule');
+
 router.post('/api/checkIfExists', async (req, res) => {
     const { email } = req.body;
     const existingUser = await User.findOne({ where: { email } });
@@ -19,7 +21,7 @@ router.post('/api/checkIfExists', async (req, res) => {
 });
 
 router.post('/api/users', async (req, res) => {
-    console.log(req.body)
+
     try {
         const { email, username, password, gender, skinType, hairType } = req.body.user;
 
@@ -28,7 +30,7 @@ router.post('/api/users', async (req, res) => {
             return res.status(400).json({ message: 'userExists' });
         }
 
-
+        console.log(req.body.user);
         const hashedPassword = await bcrypt.hash(password, 10);
         const newUser = await User.create({
             username,
@@ -36,8 +38,9 @@ router.post('/api/users', async (req, res) => {
             password: hashedPassword,
             gender,
             skinType,
-            hairType
+            hairType,
         });
+        console.log(newUser)
         return res.status(200).json({ message: 'userCreated', user: newUser });
     } catch (error) {
         console.error("Error occurred:", error); // Log any error
@@ -50,12 +53,19 @@ router.post('/api/users', async (req, res) => {
 
 
 router.post('/api/user/:id', async (req, res) => {
-    console.log(req.body)
+
     try {
         const { id } = req.params;
-        const { username, password, email, hairType, skinType } = req.body;
+        const { username, password, email, hairType, skinType, waterAmount, waterBackgroundFile, waterCharacterFile, glassAmount } = req.body;
+        console.log(req.body)
+        const updates = { username, email, hairType, skinType, waterAmount, waterBackgroundFile, waterCharacterFile, glassAmount };
 
-        const updates = { username, email, hairType, skinType };
+        for (const key in updates) {
+            if (updates[key] === null || updates[key] === undefined) {
+                delete updates[key];
+            }
+        }
+
         if (password) {
             const hashedPassword = await bcrypt.hash(password, 10);
             updates.password = hashedPassword;
@@ -104,6 +114,5 @@ router.delete('/api/delete/:id', async (req, res) => {
 
 
 });
-
 
 module.exports = router;

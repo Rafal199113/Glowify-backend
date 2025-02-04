@@ -1,59 +1,109 @@
 const { Model, DataTypes } = require('sequelize');
-const sequelize = require('../database');
+const sequelize = require('../database'); // Wskazujemy na połączenie z bazą danych
+
+// Definiowanie modelu User
 class User extends Model { }
-// Model użytkownika
+
 User.init({
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
-        autoIncrement: true
+        autoIncrement: true,
     },
     username: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
     },
     password: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
     },
     email: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true
+        unique: true,
     },
     gender: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true
     },
     skinType: {
         type: DataTypes.ARRAY(DataTypes.INTEGER),
         allowNull: false,
-        unique: true
     },
     hairType: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        unique: true
     },
     resetCode: {
         type: DataTypes.INTEGER,
         allowNull: true,
-        unique: true
     },
-    createdAt: {
-        type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW
+    waterAmount: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
     },
-    updatedAt: {
-        type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW
-    }
+    waterBackgroundFile: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        defaultValue: "1"
+    },
+    waterCharacterFile: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        defaultValue: "1"
+    },
+    glassAmount: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        defaultValue: 250
+    },
 }, {
     sequelize,
     modelName: 'User',
-    tableName: 'Users', // Upewnij się, że jest to poprawna nazwa tabeli
-    timestamps: true // Automatycznie dodaje createdAt i updatedAt
+    tableName: 'Users',
+    timestamps: true,
 });
 
-module.exports = User;
+// Definiowanie modelu UserWaterHistory
+class UserWaterHistory extends Model { }
+
+UserWaterHistory.init({
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+    },
+    user_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+    },
+    date: {
+        type: DataTypes.DATEONLY,
+        allowNull: false,
+    },
+    drankWaterAmount: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+    },
+    createdAt: {
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
+    },
+    updatedAt: {
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
+    },
+}, {
+    sequelize,
+    modelName: 'UserWaterHistory',
+    tableName: 'UserWaterHistories',
+    timestamps: true,
+});
+
+
+UserWaterHistory.belongsTo(User, { foreignKey: 'user_id', as: 'user' });
+User.hasMany(UserWaterHistory, { foreignKey: 'user_id', as: 'waterHistory' });
+
+
+module.exports = { User, UserWaterHistory };

@@ -37,6 +37,22 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
+      resetCode: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+      },
+      waterAmount: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+      },
+      waterBackgroundFile: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      waterCharacterFile: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
       createdAt: {
         type: Sequelize.DATE,
         allowNull: false,
@@ -46,6 +62,11 @@ module.exports = {
         type: Sequelize.DATE,
         allowNull: false,
         defaultValue: Sequelize.fn('now'),
+      },
+      glassAmount: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        defaultValue: 250
       },
     });
   },

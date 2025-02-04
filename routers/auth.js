@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../models/User');
+const { User } = require('../models/User');
 const bcrypt = require('bcryptjs');
 const { sendEmail, generateFiveDigitNumber } = require('../helpers/functions')
 const jwt = require('jsonwebtoken');
@@ -10,6 +10,8 @@ const secretKey = 'mySuperSecretKey';
 router.post('/auth/passwordReset', async (req, res) => {
 
     const { email } = req.body;
+
+    console.log(email)
     await User.findOne({ where: { email } }).then(async (user) => {
         if (user) {
             const resetCode = generateFiveDigitNumber()
@@ -79,12 +81,12 @@ router.get('/auth/athenticate', async (req, res) => {
         try {
 
             let id = decoded.userId;
-            console.log(id)
+
             await User.findOne({ where: { id } }).then((user) => {
                 if (!user) {
                     return res.status(404).send('User not found');
                 }
-
+                console.log(user)
                 return res.json({
                     user: user
                 });
@@ -93,6 +95,7 @@ router.get('/auth/athenticate', async (req, res) => {
 
 
         } catch (error) {
+            console.log(error)
             res.status(500).send('Server error');
         }
     });
@@ -107,7 +110,7 @@ router.post('/auth/login', async (req, res) => {
         if (!user) {
             return res.sendStatus(404);
         }
-
+        console.log(req.body);
         const isPasswordValid = await bcrypt.compare(password, user.password);
 
         if (!isPasswordValid) {

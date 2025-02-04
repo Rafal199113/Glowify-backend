@@ -6,8 +6,11 @@
         "host": "ep-steep-rice-64178939-pooler.us-east-1.aws.neon.tech",
         "port": 5432,
         "dialect": "postgres",
-        "ssl": {
-            "rejectUnauthorized": false
+        "dialectOptions": {
+            "ssl": {
+                "require": true,
+                "rejectUnauthorized": false
+            }
         }
     }
 }

@@ -28,7 +28,8 @@ router.post('/api/userWaterHistory', async (req, res) => {
     UserWaterHistory.findOne({ where: { user_id, date } })
         .then(async (data) => {
             if (data) {
-                res.json({ day: data });
+                var drank = await UserWaterHistory.sum('drankWaterAmount', { where: { user_id } })
+                res.json({ day: data, drank: drank });
             } else {
                 const date = new Date();
                 const { id } = req.body;

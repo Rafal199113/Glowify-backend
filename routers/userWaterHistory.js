@@ -24,10 +24,10 @@ router.put('/api/userWaterHistory', async (req, res) => {
 
 router.post('/api/getDay', async (req, res) => {
     const transaction = await sequelize.transaction();
-    const date = new Date();
-    const { user_id, data } = req.body;
 
-    UserWaterHistory.update({ drankWaterAmount }, { where: { user_id, data } })
+    const { user_id, date } = req.body;
+
+    UserWaterHistory.findOne({ where: { user_id, date } })
         .then(async (data) => {
             console.log(data)
             await transaction.commit();

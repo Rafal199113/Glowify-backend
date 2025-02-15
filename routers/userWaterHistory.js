@@ -21,6 +21,25 @@ router.put('/api/userWaterHistory', async (req, res) => {
         })
 });
 
+
+router.post('/api/getDay', async (req, res) => {
+    const transaction = await sequelize.transaction();
+    const date = new Date();
+    const { user_id, data } = req.body;
+
+    UserWaterHistory.update({ drankWaterAmount }, { where: { user_id, data } })
+        .then(async (data) => {
+            console.log(data)
+            await transaction.commit();
+            res.json({ day: data });
+        })
+        .catch(async error => {
+            console.error(error);
+            await transaction.rollback();
+            res.status(500).json({ message: 'An error occurred during the update' });
+        })
+});
+
 router.post('/api/userWaterHistory', async (req, res) => {
     const transaction = await sequelize.transaction();
     const date = new Date();

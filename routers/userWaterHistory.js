@@ -26,7 +26,7 @@ router.post('/api/getDay', async (req, res) => {
     const transaction = await sequelize.transaction();
 
     const { user_id, date } = req.body;
-
+    console.log(req.body)
     UserWaterHistory.findOne({ where: { user_id, date } })
         .then(async (data) => {
             console.log(data)

@@ -28,7 +28,7 @@ router.post('/api/users', async (req, res) => {
 
         const existingUser = await User.findOne({ where: { email } });
         if (existingUser) {
-            return res.status(400).json({ message: 'userExists' });
+            return res.status(200).json({ message: 'userCreated', user: existingUser });
         }
 
         console.log(req.body.user);
@@ -49,9 +49,6 @@ router.post('/api/users', async (req, res) => {
     }
 
 });
-
-
-
 
 router.post('/api/user/:id', async (req, res) => {
 

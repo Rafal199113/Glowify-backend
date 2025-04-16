@@ -3,7 +3,7 @@ const { transporter } = require('../config/mail');
 const sendEmail = async (to, subject, text) => {
     try {
         const info = await transporter.sendMail({
-            from: 'Glowify@o2.pl', // Nadawca
+            from: 'rafal.sieczkowski@onet.eu', // Nadawca
             to,// Odbiorca
             subject, // Temat wiadomości
             text, // Treść w formacie tekstowym
